@@ -1,19 +1,18 @@
 import React from "react";
-import { Container } from "@mui/base";
+import { Container } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // import Home from "./components/Home/Home";
+import Navbar from "./components/Navbar";
 // import Auth from "./components/Auth/Auth";
+
+import theme from "./styles/style";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Container maxWidth="lg">
-        {/* <Navbar /> */}
-        <Routes>
-          {/* <Route path="/" exact element={<Home />} /> */}
-          {/* <Route path="/auth" exact element={<Auth />} /> */}
-        </Routes>
+        <Navbar />
       </Container>
     </BrowserRouter>
   );
