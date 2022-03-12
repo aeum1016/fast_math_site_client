@@ -19,19 +19,11 @@ export default makeStyles((theme) => ({
   image: {
     marginLeft: "15px",
   },
-  toolbar: {
-    display: "flex",
-    justifyContent: "flex-end",
-    width: "400px",
-  },
-  profile: {
-    display: "flex",
-    justifyContent: "space-between",
-    width: "400px",
-  },
   userName: {
     display: "flex",
     alignItems: "center",
+    color: grey[300],
+    whiteSpace: "nowrap",
   },
   brandContainer: {
     display: "flex",
@@ -42,6 +34,7 @@ export default makeStyles((theme) => ({
   navButtons: {
     display: "flex",
     alignItems: "center",
+    width: "500px",
   },
   auth: {
     color: grey[300],

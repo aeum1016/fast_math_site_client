@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {
-  AppBar,
-  Typography,
-  Avatar,
-  Toolbar,
-  Button,
-  IconButton,
-} from "@mui/material";
+import { AppBar, Typography, IconButton, Toolbar, Button } from "@mui/material";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import LeaderboardOutlinedIcon from "@mui/icons-material/LeaderboardOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
+import PersonIcon from "@mui/icons-material/Person";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import decode from "jwt-decode";
@@ -19,16 +13,10 @@ import useStyles from "../../styles/navbar";
 
 const Navbar = () => {
   const classes = useStyles();
+  const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-
-  const logout = () => {
-    dispatch({ type: "LOGOUT" });
-    navigate("/auth");
-    setUser(null);
-  };
 
   useEffect(() => {
     const token = user?.token;
@@ -43,6 +31,12 @@ const Navbar = () => {
 
     setUser(JSON.parse(localStorage.getItem("profile")));
   }, [location]);
+
+  const logout = () => {
+    dispatch({ type: "LOGOUT" });
+    navigate("/auth");
+    setUser(null);
+  };
 
   return (
     <AppBar
@@ -66,29 +60,35 @@ const Navbar = () => {
         <IconButton aria-label="settings">
           <SettingsOutlinedIcon className={classes.auth} />
         </IconButton>
-        <IconButton aria-label="auth" component={Link} to="/auth">
-          <PersonOutlinedIcon className={classes.auth} />
-        </IconButton>
-      </div>
-      <Toolbar className={classes.toolbar}>
-        {user ? (
-          <div className={classes.profile}>
-            <Avatar
-              className={classes.grey}
-              alt={user.result.name}
-              src={user.result.imageUrl}
-            >
-              {user.result.name.charAt(0)}
-            </Avatar>
-            <Typography className={classes.userName} variant="h6">
+        <IconButton
+          aria-label="auth"
+          component={Link}
+          to={user ? "/user" : "/auth"}
+        >
+          {user ? (
+            <PersonIcon className={classes.auth} />
+          ) : (
+            <PersonOutlinedIcon className={classes.auth} />
+          )}
+          {user ? (
+            <Typography className={classes.userName} variant="body1">
               {user.result.name}
             </Typography>
-            <Button variant="text" className={classes.auth} onClick={logout}>
-              Logout
-            </Button>
-          </div>
-        ) : null}
-      </Toolbar>
+          ) : null}
+        </IconButton>
+      </div>
+      <div>
+        <Toolbar className={classes.toolbar}>
+          {location.pathname === "/user" ? (
+            <div className={classes.profile}>
+              <Button variant="text" className={classes.auth} onClick={logout}>
+                Logout
+              </Button>
+            </div>
+          ) : null}
+        </Toolbar>
+      </div>
+      {console.log(location.pathname)};
     </AppBar>
   );
 };
