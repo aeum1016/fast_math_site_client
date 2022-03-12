@@ -7,12 +7,15 @@ import {
   Button,
   IconButton,
 } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import LeaderboardOutlinedIcon from "@mui/icons-material/LeaderboardOutlined";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import decode from "jwt-decode";
 
-import useStyles from "../styles/navbar";
+import useStyles from "../../styles/navbar";
 
 const Navbar = () => {
   const classes = useStyles();
@@ -27,19 +30,19 @@ const Navbar = () => {
     setUser(null);
   };
 
-  // useEffect(() => {
-  //   const token = user?.token;
+  useEffect(() => {
+    const token = user?.token;
 
-  //   if (token) {
-  //     const decodedToken = decode(token);
+    if (token) {
+      const decodedToken = decode(token);
 
-  //     if (decodedToken.exp * 1000 < new Date().getTime()) {
-  //       logout();
-  //     }
-  //   }
+      if (decodedToken.exp * 1000 < new Date().getTime()) {
+        logout();
+      }
+    }
 
-  //   setUser(JSON.parse(localStorage.getItem("profile")));
-  // }, [location]);
+    setUser(JSON.parse(localStorage.getItem("profile")));
+  }, [location]);
 
   return (
     <AppBar
@@ -50,21 +53,21 @@ const Navbar = () => {
     >
       <div className={classes.brandContainer}>
         <Typography className={classes.heading} variant="h3" align="center">
-          QUICK
+          QUICKMATH
         </Typography>
       </div>
-      <div classname={classes.navButtons}>
+      <div className={classes.navButtons}>
         <IconButton aria-label="home" component={Link} to="/">
-          <DeleteIcon />
+          <HomeOutlinedIcon className={classes.auth} />
         </IconButton>
         <IconButton aria-label="leaderboard">
-          <DeleteIcon />
+          <LeaderboardOutlinedIcon className={classes.auth} />
         </IconButton>
         <IconButton aria-label="settings">
-          <DeleteIcon />
+          <SettingsOutlinedIcon className={classes.auth} />
         </IconButton>
-        <IconButton aria-label="auth">
-          <DeleteIcon />
+        <IconButton aria-label="auth" component={Link} to="/auth">
+          <PersonOutlinedIcon className={classes.auth} />
         </IconButton>
       </div>
       <Toolbar className={classes.toolbar}>
@@ -84,16 +87,7 @@ const Navbar = () => {
               Logout
             </Button>
           </div>
-        ) : (
-          <Button
-            variant="text"
-            className={classes.auth}
-            component={Link}
-            to="/auth"
-          >
-            Sign In
-          </Button>
-        )}
+        ) : null}
       </Toolbar>
     </AppBar>
   );

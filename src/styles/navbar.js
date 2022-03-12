@@ -12,7 +12,7 @@ export default makeStyles((theme) => ({
     padding: "10px 100px",
   },
   heading: {
-    color: grey[50],
+    color: grey[300],
     fontWeight: "bolder",
     textDecoration: "none",
   },
@@ -37,18 +37,18 @@ export default makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    width: "160px",
+    width: "280px",
   },
   navButtons: {
     display: "flex",
     alignItems: "center",
   },
   auth: {
-    color: grey[50],
+    color: grey[300],
     backgroundColor: grey[800],
   },
   grey: {
-    color: grey[50],
+    color: grey[300],
     backgroundColor: grey[800],
   },
 }));
