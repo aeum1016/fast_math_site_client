@@ -5,11 +5,9 @@ export default (attempts = [], action) => {
     case FETCH_ALL:
       return action.payload;
     case GET_USER:
-      return attempts.filter((attempt) => attempt._id === action.payload);
+      return action.payload;
     case CREATE:
       return [...attempts, action.payload];
-    case DELETE:
-      return attempts.filter((attempt) => attempt._id !== action.payload);
     default:
       return attempts;
   }

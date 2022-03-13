@@ -20,12 +20,9 @@ CURAPI.interceptors.request.use((req) => {
   return req;
 });
 
-// export const fetchPosts = () => CURAPI.get("/posts");
-// export const createPost = (newPost) => CURAPI.post("/posts", newPost);
-// export const likePost = (id) => CURAPI.patch(`/posts/${id}/likePost`);
-// export const updatePost = (currentId, updatedPost) =>
-//   CURAPI.patch(`/posts/${currentId}`, updatedPost);
-// export const deletePost = (id) => CURAPI.delete(`/posts/${id}`);
+export const fetchAttempts = () => CURAPI.get("/attempts");
+export const createPost = (newAttempt) => CURAPI.post("/attempts", newAttempt);
+export const fetchUserAttempts = (email) => CURAPI.patch(`/attempts/${email}`);
 
 export const signIn = (formData) => CURAPI.post("/user/signin", formData);
 export const signUp = (formData) => CURAPI.post("/user/signup", formData);
