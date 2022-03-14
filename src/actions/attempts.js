@@ -1,9 +1,9 @@
-import { FETCH_ALL, GET_USER, CREATE, DELETE } from "../constants/actionTypes";
+import { FETCH_ALL, GET_USER, CREATE } from "../constants/actionTypes";
 import * as api from "../api/index.js";
 
-export const getAttempts = () => async (dispatch) => {
+export const getAttempts = (navigate) => async (dispatch) => {
   try {
-    const { data } = await api.getAttempts();
+    const { data } = await api.fetchAttempts();
 
     dispatch({ type: FETCH_ALL, data });
 
@@ -13,7 +13,7 @@ export const getAttempts = () => async (dispatch) => {
   }
 };
 
-export const createPost = (attempt) => async (dispatch) => {
+export const createAttempt = (attempt) => async (dispatch) => {
   try {
     const { data } = await api.createPost(attempt);
 
