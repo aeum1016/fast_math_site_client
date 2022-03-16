@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 
 import { createAttempt } from "../../actions/attempts";
 
+import useStyles from "../../styles/auth";
+
 const Form = () => {
   const [attemptData, setAttemptData] = useState({
     email: "",
