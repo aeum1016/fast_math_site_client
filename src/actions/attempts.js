@@ -1,13 +1,11 @@
 import { FETCH_ALL, GET_USER, CREATE } from "../constants/actionTypes";
 import * as api from "../api/index.js";
 
-export const getAttempts = (navigate) => async (dispatch) => {
+export const getAttempts = () => async (dispatch) => {
   try {
     const { data } = await api.fetchAttempts();
 
-    dispatch({ type: FETCH_ALL, data });
-
-    navigate("/");
+    dispatch({ type: FETCH_ALL, payload: data });
   } catch (error) {
     console.log(error);
   }
