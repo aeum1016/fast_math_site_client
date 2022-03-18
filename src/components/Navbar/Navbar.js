@@ -88,7 +88,6 @@ const Navbar = () => {
           ) : null}
         </Toolbar>
       </div>
-      {console.log(location.pathname)};
     </AppBar>
   );
 };

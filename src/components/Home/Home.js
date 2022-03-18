@@ -3,7 +3,14 @@ import React from "react";
 import Game from "./Game/Game";
 
 const Home = () => {
-  return <Game maxValue={12} testOperation={"all"} />;
+  return (
+    <Game
+      testOperation={"+"}
+      maxValue={15}
+      testType={"time"}
+      testCondition={20}
+    />
+  );
 };
 
 export default Home;

@@ -9,17 +9,23 @@ import { createAttempt, getAttempts } from "../../../actions/attempts";
 
 import useStyles from "../../../styles/game";
 
-const Game = ({ curQuestion, testOperation, maxValue, testType }) => {
+const Game = ({ testOperation, maxValue, testType, testCondition }) => {
   const classes = useStyles();
 
   const max = maxValue;
   const operation = testOperation;
+  const endType = testType;
+  const endCondition = testCondition;
+  const [timeData, setTimeData] = useState({
+    startTime: 0,
+    curTime: 0,
+  });
 
   const [attemptData, setAttemptData] = useState({
     email: "",
     operation: operation,
     max: max,
-    type: testType,
+    type: endType,
     time: 0,
     completed: 0,
     incorrect: 0,
@@ -50,10 +56,20 @@ const Game = ({ curQuestion, testOperation, maxValue, testType }) => {
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("profile"));
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     dispatch(createAttempt({ ...attemptData, email: user?.result?.email }));
     clear();
+  };
+
+  const handleChange = () => {
+    if (attemptData.time === 0) {
+      const sTime = new Date().getTime();
+      const cTime = sTime + 10;
+      setTimeData({
+        startTime: sTime,
+        curTime: cTime,
+      });
+    }
   };
 
   const handleNextQuestion = (e) => {
@@ -66,37 +82,67 @@ const Game = ({ curQuestion, testOperation, maxValue, testType }) => {
     questions.questionOperation.push(getOperation(attemptData.operation));
     setAttemptData({
       ...attemptData,
-      incorrect:
-        attemptData.incorrect +
-        (isNaN(parseInt(e.incorrect)) ? 0 : parseInt(e.incorrect)),
       completed: attemptData.completed + 1,
     });
   };
 
-  const handleIncorrect = (e) => {
+  const handleIncorrect = () => {
     setAttemptData({
       ...attemptData,
       incorrect: attemptData.incorrect + 1,
     });
   };
+  useEffect(() => {
+    const updateTime = setInterval(() => {
+      if (timeData.startTime !== 0) {
+        setTimeData({
+          ...timeData,
+          curTime: new Date().getTime(),
+        });
+        setAttemptData({
+          ...attemptData,
+          time: timeData.curTime - timeData.startTime,
+        });
+      }
+    }, 10);
+    return () => {
+      clearInterval(updateTime);
+    };
+  }, [attemptData, timeData]);
 
   useEffect(() => {
-    dispatch(getAttempts());
-  }, [questions]);
+    if (attemptData.type === "correct") {
+      if (attemptData.completed === endCondition) {
+        handleSubmit();
+      }
+    } else if (attemptData.type === "time") {
+      if (attemptData.time >= endCondition * 1000) {
+        handleSubmit();
+      }
+    }
+  }, [attemptData]);
 
   const clear = () => {
     setAttemptData({
+      ...attemptData,
       email: "",
       time: 0,
       completed: 0,
       incorrect: 0,
+    });
+    setTimeData({
+      startTime: 0,
+      curTime: 0,
     });
   };
 
   return (
     <span>
       <Typography variant="h2">
-        {attemptData.completed} {attemptData.incorrect}
+        {attemptData.completed}{" "}
+        {attemptData.type === "time"
+          ? endCondition - Math.floor(attemptData.time / 1000)
+          : attemptData.time / 1000}
       </Typography>
       <Grid container className={classes.grid} columns={20}>
         <Grid item xs={2} sm={2}>
@@ -131,6 +177,7 @@ const Game = ({ curQuestion, testOperation, maxValue, testType }) => {
             qClass={classes.center}
             handleCorrect={handleNextQuestion}
             handleIncorrect={handleIncorrect}
+            handleChange={handleChange}
           />
         </Grid>
         <Grid item xs={4} sm={4}>

@@ -14,20 +14,22 @@ const Question = ({
   qClass,
   handleCorrect,
   handleIncorrect,
+  handleChange,
 }) => {
   const classes = useStyles();
 
   const [questionData, setQuestionData] = useState({
     answer: "",
   });
-  const dispatch = useDispatch();
 
-  const handleChange = (e) => {
+  const handleQuestion = (e) => {
     setQuestionData({ ...questionData, [e.target.name]: e.target.value });
   };
 
   const handleKeypress = (e) => {
     //it triggers by pressing the enter key
+    if ((e.keyCode >= 48 && e.keyCode <= 57) || e.keyCode === 189)
+      handleChange();
     if (e.keyCode === 13) {
       handleSubmit();
     }
@@ -39,10 +41,10 @@ const Question = ({
         getAnswer(Operation === "/" ? First * Second : First, Second, Operation)
       ) === questionData.answer
     ) {
-      handleCorrect(questionData);
+      handleCorrect();
       clear();
     } else {
-      handleIncorrect(questionData);
+      handleIncorrect();
     }
   };
 
@@ -65,7 +67,7 @@ const Question = ({
             name="answer"
             label="Answer"
             inputValue={questionData.answer}
-            handleChange={handleChange}
+            handleChange={handleQuestion}
             onKeyPress={handleKeypress}
             autoFocus={true}
           />
