@@ -5,9 +5,9 @@ import Game from "./Game/Game";
 const Home = () => {
   return (
     <Game
-      testOperation={"+"}
-      maxValue={15}
-      testType={"time"}
+      testOperation={"all"}
+      maxValue={12}
+      testType={"correct"}
       testCondition={20}
     />
   );

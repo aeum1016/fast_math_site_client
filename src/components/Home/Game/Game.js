@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 
 import Question from "../Question";
 import { getRandomInt, getOperation } from "./Helper";
-import { createAttempt, getAttempts } from "../../../actions/attempts";
+import { createAttempt, getUserAttempts } from "../../../actions/attempts";
 
 import useStyles from "../../../styles/game";
 
@@ -92,6 +92,21 @@ const Game = ({ testOperation, maxValue, testType, testCondition }) => {
       incorrect: attemptData.incorrect + 1,
     });
   };
+
+  const clear = () => {
+    setAttemptData({
+      ...attemptData,
+      email: "",
+      time: 0,
+      completed: 0,
+      incorrect: 0,
+    });
+    setTimeData({
+      startTime: 0,
+      curTime: 0,
+    });
+  };
+
   useEffect(() => {
     const updateTime = setInterval(() => {
       if (timeData.startTime !== 0) {
@@ -122,23 +137,13 @@ const Game = ({ testOperation, maxValue, testType, testCondition }) => {
     }
   }, [attemptData]);
 
-  const clear = () => {
-    setAttemptData({
-      ...attemptData,
-      email: "",
-      time: 0,
-      completed: 0,
-      incorrect: 0,
-    });
-    setTimeData({
-      startTime: 0,
-      curTime: 0,
-    });
-  };
+  useEffect(() => {
+    dispatch(getUserAttempts(user?.result?.email));
+  }, [setTimeData]);
 
   return (
     <span>
-      <Typography variant="h2">
+      <Typography variant="h2" className={classes.grey}>
         {attemptData.completed}{" "}
         {attemptData.type === "time"
           ? endCondition - Math.floor(attemptData.time / 1000)

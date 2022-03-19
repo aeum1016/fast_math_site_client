@@ -25,7 +25,7 @@ export const getUserAttempts = (email) => async (dispatch) => {
   try {
     const { data } = await api.fetchUserAttempts(email);
 
-    dispatch({ type: GET_USER, data });
+    dispatch({ type: GET_USER, payload: data });
   } catch (error) {
     console.log(error);
   }

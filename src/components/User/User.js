@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Typography } from "@mui/material";
+import Attempts from "../Attempts/Attempts";
 
 const User = () => {
-  return <Typography variant="h2">Profile</Typography>;
+  return <Attempts />;
 };
 
 export default User;

@@ -22,7 +22,7 @@ CURAPI.interceptors.request.use((req) => {
 
 export const fetchAttempts = () => CURAPI.get("/attempts");
 export const createPost = (newAttempt) => CURAPI.post("/attempts", newAttempt);
-export const fetchUserAttempts = (email) => CURAPI.patch(`/attempts/${email}`);
+export const fetchUserAttempts = (email) => CURAPI.get(`/attempts/${email}`);
 
 export const signIn = (formData) => CURAPI.post("/user/signin", formData);
 export const signUp = (formData) => CURAPI.post("/user/signup", formData);
