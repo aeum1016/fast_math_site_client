@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { CircularProgress, Box } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useSelector, useDispatch } from "react-redux";
 
-import { getUserAttempts } from "../../actions/attempts";
+import { getAttempts } from "../../actions/attempts";
 
-const Attempts = () => {
+const Leaderboard = () => {
   const style = {
     borderRadius: 2,
     border: 0,
@@ -37,7 +37,7 @@ const Attempts = () => {
     completed,
     incorrect,
     date,
-    id
+    user
   ) {
     date = new Date(date).toLocaleString();
     return {
@@ -48,13 +48,15 @@ const Attempts = () => {
       completed: completed,
       incorrect: incorrect,
       date: date,
-      id: id,
+      user: user,
+      id: user + date,
     };
   }
   function getSpeed(params) {
     return `${params.row.completed / (params.row.time / 60)}`;
   }
   const columns = [
+    { field: "user", headerName: "User", width: 200 },
     { field: "type", headerName: "Type", width: 100 },
     { field: "operation", headerName: "Operation", width: 100 },
     { field: "max", headerName: "Max Value", width: 100 },
@@ -67,51 +69,53 @@ const Attempts = () => {
 
   const rows = [];
 
-  const userAttempts = useSelector((state) => state.user);
+  const attempts = useSelector((state) => state.attempts);
 
-  userAttempts.map((userAttempt) =>
+  attempts.map((attempt) =>
     rows.push(
       createData(
-        userAttempt.type,
-        userAttempt.operation,
-        userAttempt.max,
-        userAttempt.time,
-        userAttempt.completed,
-        userAttempt.incorrect,
-        userAttempt.createdAt,
-        userAttempt.email + userAttempt.createdAt
+        attempt.type,
+        attempt.operation,
+        attempt.max,
+        attempt.time,
+        attempt.completed,
+        attempt.incorrect,
+        attempt.createdAt,
+        attempt.email
       )
     )
   );
 
-  rows.reverse();
-
-  const user = JSON.parse(localStorage.getItem("profile"));
+  const filtered = rows.sort(
+    (a, b) => b.completed / b.time - a.completed / a.time
+  );
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUserAttempts(user?.result?.email));
-  }, [user]);
+    dispatch(getAttempts());
+  }, []);
 
-  return !userAttempts.length ? (
+  return !attempts.length ? (
     <CircularProgress />
   ) : (
     <Box
       style={{
         height: "630px",
-        width: "900px",
+        width: "1100px",
         marginLeft: "auto",
         marginRight: "auto",
       }}
     >
       <DataGrid
         sx={{ ...style }}
-        rows={rows}
+        rows={filtered}
         columns={columns}
         pageSize={10}
         rowsPerPageOptions={[10]}
         pagination
+        hideFooterPagination
+        disableColumnFilter
         componentsProps={{
           pagination: { sx: { ...style } },
         }}
@@ -120,4 +124,4 @@ const Attempts = () => {
   );
 };
 
-export default Attempts;
+export default Leaderboard;

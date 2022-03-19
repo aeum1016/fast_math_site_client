@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Container } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -7,27 +7,20 @@ import Navbar from "./components/Navbar/Navbar";
 import Auth from "./components/Auth/Auth";
 import User from "./components/User/User";
 import Test from "./components/Test/Test";
-
-import { useDispatch } from "react-redux";
-import { getUserAttempts } from "./actions/attempts";
+import Leaderboard from "./components/Leaderboard/Leaderboard";
+import Settings from "./components/Home/Settings/Settings";
 
 const App = () => {
-  const user = JSON.parse(localStorage.getItem("profile"));
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getUserAttempts(user?.result?.email));
-  }, [user]);
-
   return (
     <BrowserRouter>
       <Container maxWidth="lg">
         <Navbar />
         <Routes>
           <Route path="/" exact element={<Home />} />
+          <Route path="/settings" exact element={<Settings />} />
           <Route path="/auth" exact element={<Auth />} />
           <Route path="/user" exact element={<User />} />
+          <Route path="/leaderboard" exact element={<Leaderboard />} />
           <Route path="/test" exact element={<Test />} />
         </Routes>
       </Container>

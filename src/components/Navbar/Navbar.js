@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { AppBar, Typography, IconButton, Toolbar, Button } from "@mui/material";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import CalculateOutlinedIcon from "@mui/icons-material/CalculateOutlined";
 import LeaderboardOutlinedIcon from "@mui/icons-material/LeaderboardOutlined";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import PersonIcon from "@mui/icons-material/Person";
 import { useDispatch } from "react-redux";
@@ -52,13 +51,10 @@ const Navbar = () => {
       </div>
       <div className={classes.navButtons}>
         <IconButton aria-label="home" component={Link} to="/">
-          <HomeOutlinedIcon className={classes.auth} />
+          <CalculateOutlinedIcon className={classes.auth} />
         </IconButton>
-        <IconButton aria-label="leaderboard">
+        <IconButton aria-label="leaderboard" component={Link} to="/leaderboard">
           <LeaderboardOutlinedIcon className={classes.auth} />
-        </IconButton>
-        <IconButton aria-label="settings">
-          <SettingsOutlinedIcon className={classes.auth} />
         </IconButton>
         <IconButton
           aria-label="auth"

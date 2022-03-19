@@ -20,6 +20,7 @@ import { signin, signup } from "../../actions/auth";
 const initialState = {
   firstName: "",
   lastName: "",
+  username: "",
   email: "",
   password: "",
   confirmPassword: "",
@@ -100,6 +101,11 @@ const Auth = () => {
                   label="Last Name"
                   handleChange={handleChange}
                   half
+                />
+                <Input
+                  name="username"
+                  label="Username"
+                  handleChange={handleChange}
                 />
               </>
             )}

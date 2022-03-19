@@ -1,15 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Game from "./Game/Game";
+import Settings from "./Settings/Settings";
 
 const Home = () => {
+  const [settingsPage, setSettingsPage] = useState({
+    on: false,
+  });
+
+  const setSettingsOn = () => {
+    setSettingsPage({
+      on: true,
+    });
+  };
+  const setSettingsOff = () => {
+    setSettingsPage({
+      on: false,
+    });
+  };
+
+  const [settings, setSettings] = useState({
+    type: "correct",
+    operation: "all",
+    max: 12,
+    condition: 25,
+  });
+
+  const handleSettings = (e) => {
+    setSettings({
+      ...settings,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   return (
-    <Game
-      testOperation={"all"}
-      maxValue={12}
-      testType={"correct"}
-      testCondition={20}
-    />
+    <React.Fragment>
+      {settingsPage.on ? (
+        <Settings
+          settings={settings}
+          handleSettings={handleSettings}
+          toHome={setSettingsOff}
+        />
+      ) : (
+        <Game
+          testType={settings.type}
+          testOperation={settings.operation}
+          maxValue={settings.max}
+          testCondition={settings.condition}
+          toSettings={setSettingsOn}
+        />
+      )}
+    </React.Fragment>
   );
 };
 
