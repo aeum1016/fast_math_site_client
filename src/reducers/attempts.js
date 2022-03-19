@@ -1,6 +1,6 @@
 import { FETCH_ALL, CREATE } from "../constants/actionTypes";
 
-export default (attempts = [], action) => {
+const attemptsReducer = (attempts = [], action) => {
   switch (action.type) {
     case FETCH_ALL:
       return action.payload;
@@ -10,3 +10,5 @@ export default (attempts = [], action) => {
       return attempts;
   }
 };
+
+export default attemptsReducer;

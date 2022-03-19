@@ -1,29 +1,31 @@
 import React from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  CircularProgress,
-} from "@mui/material";
+import { CircularProgress, Box } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 import { useSelector } from "react-redux";
 
 const Attempts = () => {
   const style = {
+    borderRadius: 2,
+    border: 0,
+    "& .MuiDataGrid-main": { borderBottom: 0 },
     color: "#e0e0e0",
     backgroundColor: "#424242",
-    border: "0",
+    "& .MuiDataGrid-cell:hover": {
+      color: "#FFFFFF",
+    },
+    "& .MuiDataGrid-row": {
+      "&:nth-child(2n)": { backgroundColor: "#616161" },
+    },
+    "& .MuiDataGrid-columnHeaders": {
+      fontSize: 16,
+    },
+    "& .MuiDataGrid-cell": {
+      borderBottom: "none",
+    },
+    "& .MuiPaginationItem": {
+      color: "#ffffff",
+    },
   };
-
-  const headerStyle = {
-    color: "#e0e0e0",
-    backgroundColor: "#616161",
-    border: "0",
-  };
-
-  const rows = [];
 
   function createData(
     type,
@@ -36,8 +38,33 @@ const Attempts = () => {
     id
   ) {
     date = new Date(date).toLocaleString();
-    return { type, operation, max, time, completed, incorrect, date, id };
+    return {
+      type: type,
+      operation: operation,
+      max: max,
+      time: time / 1000,
+      completed: completed,
+      incorrect: incorrect,
+      date: date,
+      id: id,
+    };
   }
+  function getSpeed(params) {
+    return `${params.row.completed / (params.row.time / 60)}`;
+  }
+  const columns = [
+    { field: "type", headerName: "Type", width: 100 },
+    { field: "operation", headerName: "Operation", width: 100 },
+    { field: "max", headerName: "Max Value", width: 100 },
+    { field: "time", headerName: "Time (s)", width: 100 },
+    { field: "completed", headerName: "Completed", width: 100 },
+    { field: "incorrect", headerName: "Incorrect", width: 100 },
+    { field: "speed", headerName: "QPM", width: 100, valueGetter: getSpeed },
+    { field: "date", headerName: "Date", flex: 1 },
+  ];
+
+  const rows = [];
+
   const userAttempts = useSelector((state) => state.user);
 
   userAttempts.map((userAttempt) =>
@@ -54,72 +81,32 @@ const Attempts = () => {
       )
     )
   );
-  const rowsRev = rows.reverse().slice(0, 10);
+
+  rows.reverse();
 
   return !userAttempts.length ? (
     <CircularProgress />
   ) : (
-    <TableContainer>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead sx={{ ...headerStyle }}>
-          <TableRow sx={{ ...headerStyle }}>
-            <TableCell sx={{ ...headerStyle }} align="right">
-              Type
-            </TableCell>
-            <TableCell sx={{ ...headerStyle }} align="right">
-              Operation
-            </TableCell>
-            <TableCell sx={{ ...headerStyle }} align="right">
-              Max Value
-            </TableCell>
-            <TableCell sx={{ ...headerStyle }} align="right">
-              Time
-            </TableCell>
-            <TableCell sx={{ ...headerStyle }} align="right">
-              Completed
-            </TableCell>
-            <TableCell sx={{ ...headerStyle }} align="right">
-              Incorrect
-            </TableCell>
-            <TableCell sx={{ ...headerStyle }} align="right">
-              Date
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rowsRev.map((row) => (
-            <TableRow
-              key={row.id}
-              sx={{
-                ...style,
-              }}
-            >
-              <TableCell sx={{ ...style }} align="right">
-                {row.type}
-              </TableCell>
-              <TableCell sx={{ ...style }} align="right">
-                {row.operation}
-              </TableCell>
-              <TableCell sx={{ ...style }} align="right">
-                {row.max}
-              </TableCell>
-              <TableCell sx={{ ...style }} align="right">
-                {row.time}
-              </TableCell>
-              <TableCell sx={{ ...style }} align="right">
-                {row.completed}
-              </TableCell>
-              <TableCell sx={{ ...style }} align="right">
-                {row.incorrect}
-              </TableCell>
-              <TableCell sx={{ ...style }} align="right">
-                {row.date}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Box
+      style={{
+        height: "630px",
+        width: "900px",
+        marginLeft: "auto",
+        marginRight: "auto",
+      }}
+    >
+      <DataGrid
+        sx={{ ...style }}
+        rows={rows}
+        columns={columns}
+        pageSize={10}
+        rowsPerPageOptions={[10]}
+        pagination
+        componentsProps={{
+          pagination: { sx: { ...style } },
+        }}
+      />
+    </Box>
   );
 };
 

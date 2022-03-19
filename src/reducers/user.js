@@ -1,6 +1,6 @@
 import { GET_USER } from "../constants/actionTypes";
 
-export default (userAttempts = [], action) => {
+const userReducer = (userAttempts = [], action) => {
   switch (action.type) {
     case GET_USER:
       return action.payload;
@@ -8,3 +8,5 @@ export default (userAttempts = [], action) => {
       return userAttempts;
   }
 };
+
+export default userReducer;
