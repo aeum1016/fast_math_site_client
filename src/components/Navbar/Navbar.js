@@ -45,8 +45,8 @@ const Navbar = () => {
       elevation={0}
     >
       <div className={classes.brandContainer}>
-        <Typography className={classes.heading} variant="h3" align="center">
-          QUICKMATH
+        <Typography className={classes.heading} variant="h4" align="center">
+          DoSomeMath
         </Typography>
       </div>
       <div className={classes.navButtons}>

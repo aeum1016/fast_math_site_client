@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { CircularProgress, Box } from "@mui/material";
+import { CircularProgress, Box, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -39,8 +39,7 @@ const Leaderboard = () => {
     date,
     user
   ) {
-    date = new Date(date).toLocaleString();
-
+    const shortDate = new Date(date).toLocaleDateString();
     return {
       type: type,
       operation: operation,
@@ -48,7 +47,7 @@ const Leaderboard = () => {
       time: time / 1000,
       completed: completed,
       incorrect: incorrect,
-      date: date,
+      date: shortDate,
       user: user,
       id: user + date,
     };
@@ -57,23 +56,21 @@ const Leaderboard = () => {
     return `${params.row.completed / (params.row.time / 60)}`;
   }
   const columns = [
-    { field: "user", headerName: "User", width: 200 },
-    { field: "type", headerName: "Type", width: 100 },
-    { field: "operation", headerName: "Operation", width: 100 },
-    { field: "max", headerName: "Max Value", width: 100 },
-    { field: "time", headerName: "Time (s)", width: 100 },
-    { field: "completed", headerName: "Completed", width: 100 },
-    { field: "incorrect", headerName: "Incorrect", width: 100 },
+    { field: "user", headerName: "User", width: 150 },
+    { field: "time", headerName: "Time (s)", width: 80 },
+    { field: "incorrect", headerName: "Incorrect", width: 90 },
     { field: "speed", headerName: "QPM", width: 100, valueGetter: getSpeed },
     { field: "date", headerName: "Date", flex: 1 },
   ];
 
-  const rows = [];
+  const allAttempts = [];
 
   const attempts = useSelector((state) => state.attempts);
 
+  console.log(attempts);
+
   attempts.map((attempt) =>
-    rows.push(
+    allAttempts.push(
       createData(
         attempt.type,
         attempt.operation,
@@ -86,10 +83,53 @@ const Leaderboard = () => {
       )
     )
   );
+  allAttempts.sort((a, b) => b.completed / b.time - a.completed / a.time);
 
-  const filtered = rows.sort(
-    (a, b) => b.completed / b.time - a.completed / a.time
+  const uniqueUsers = new Set();
+  function containsUser(a) {
+    if (!uniqueUsers.has(a.user)) {
+      uniqueUsers.add(a.user);
+      return false;
+    }
+    return true;
+  }
+
+  const allOps12Max25Questions = allAttempts.filter(
+    (a) =>
+      a.type === "correct" &&
+      a.operation === "all" &&
+      a.max === 12 &&
+      a.completed === 25 &&
+      !containsUser(a)
   );
+  uniqueUsers.clear();
+  const allOps20Max25Questions = allAttempts.filter(
+    (a) =>
+      a.type === "correct" &&
+      a.operation === "all" &&
+      a.max === 20 &&
+      a.completed === 25 &&
+      !containsUser(a)
+  );
+  uniqueUsers.clear();
+  const multiplication12Max25Questions = allAttempts.filter(
+    (a) =>
+      a.type === "correct" &&
+      a.operation === "*" &&
+      a.max === 12 &&
+      a.completed === 25 &&
+      !containsUser(a)
+  );
+  uniqueUsers.clear();
+  const division12Max25Questions = allAttempts.filter(
+    (a) =>
+      a.type === "correct" &&
+      a.operation === "/" &&
+      a.max === 12 &&
+      a.completed === 25 &&
+      !containsUser(a)
+  );
+  uniqueUsers.clear();
 
   const dispatch = useDispatch();
 
@@ -100,28 +140,96 @@ const Leaderboard = () => {
   return !attempts.length ? (
     <CircularProgress />
   ) : (
-    <Box
-      style={{
-        height: "630px",
-        width: "1100px",
-        marginLeft: "auto",
-        marginRight: "auto",
-      }}
-    >
-      <DataGrid
-        sx={{ ...style }}
-        rows={filtered}
-        columns={columns}
-        pageSize={10}
-        rowsPerPageOptions={[10]}
-        pagination
-        hideFooterPagination
-        disableColumnFilter
-        componentsProps={{
-          pagination: { sx: { ...style } },
+    <>
+      <Box
+        style={{
+          height: "680px",
+          width: "100%",
+          display: "inline-flex",
+          marginLeft: "auto",
+          marginRight: "auto",
         }}
-      />
-    </Box>
+      >
+        <div style={{ width: "520px", margin: "25px" }}>
+          <Typography color="#e0e0e0" fontWeight="bold" variant="h4">
+            Correct All 12 25
+          </Typography>
+          <DataGrid
+            sx={{ ...style }}
+            rows={allOps12Max25Questions}
+            columns={columns}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
+            hideFooterPagination
+            disableColumnFilter
+            componentsProps={{
+              pagination: { sx: { ...style } },
+            }}
+          />
+        </div>
+        <div style={{ width: "520px", margin: "25px" }}>
+          <Typography color="#e0e0e0" fontWeight="bold" variant="h4">
+            Correct All 20 25
+          </Typography>
+          <DataGrid
+            sx={{ ...style }}
+            rows={allOps20Max25Questions}
+            columns={columns}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
+            hideFooterPagination
+            disableColumnFilter
+            componentsProps={{
+              pagination: { sx: { ...style } },
+            }}
+          />
+        </div>
+      </Box>
+      <Box
+        style={{
+          height: "680px",
+          width: "100%",
+          display: "inline-flex",
+          marginLeft: "auto",
+          marginRight: "auto",
+        }}
+      >
+        <div style={{ width: "520px", margin: "25px" }}>
+          <Typography color="#e0e0e0" fontWeight="bold" variant="h4">
+            Correct Mult. 12 25
+          </Typography>
+          <DataGrid
+            sx={{ ...style }}
+            rows={multiplication12Max25Questions}
+            columns={columns}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
+            hideFooterPagination
+            disableColumnFilter
+            componentsProps={{
+              pagination: { sx: { ...style } },
+            }}
+          />
+        </div>
+        <div style={{ width: "520px", margin: "25px" }}>
+          <Typography color="#e0e0e0" fontWeight="bold" variant="h4">
+            Correct Div. 12 25
+          </Typography>
+          <DataGrid
+            sx={{ ...style }}
+            rows={division12Max25Questions}
+            columns={columns}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
+            hideFooterPagination
+            disableColumnFilter
+            componentsProps={{
+              pagination: { sx: { ...style } },
+            }}
+          />
+        </div>
+      </Box>
+    </>
   );
 };
 

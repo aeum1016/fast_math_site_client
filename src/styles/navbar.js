@@ -29,7 +29,7 @@ export default makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    width: "280px",
+    width: "220px",
   },
   navButtons: {
     display: "flex",
