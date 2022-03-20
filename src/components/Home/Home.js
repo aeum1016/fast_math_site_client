@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 
 import Game from "./Game/Game";
 import Settings from "./Settings/Settings";
-import { useNavigate } from "react-router-dom";
+import Attempt from "./Attempt/Attempt";
 
 const Home = () => {
-  const navigate = useNavigate();
   const [settingsPage, setSettingsPage] = useState({
+    on: false,
+  });
+  const [attemptPage, setAttemptPage] = useState({
     on: false,
   });
 
@@ -21,17 +23,40 @@ const Home = () => {
     });
   };
 
-  const [settings, setSettings] = useState({
+  const setAttemptOn = () => {
+    setAttemptPage({
+      on: true,
+    });
+  };
+  const setAttemptOff = () => {
+    setAttemptPage({
+      on: false,
+    });
+  };
+
+  const [attemptStats, setAttemptStats] = useState({
     type: "correct",
     operation: "all",
     max: 12,
     condition: 25,
+    time: 0,
+    completed: 0,
+    incorrect: 0,
   });
 
-  const handleSettings = (e) => {
-    setSettings({
-      ...settings,
+  const handleAttemptStats = (e) => {
+    setAttemptStats({
+      ...attemptStats,
       [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleAttempt = (e) => {
+    setAttemptStats({
+      ...attemptStats,
+      time: e.time,
+      completed: e.completed,
+      incorrect: e.incorrect,
     });
   };
 
@@ -39,17 +64,21 @@ const Home = () => {
     <React.Fragment>
       {settingsPage.on ? (
         <Settings
-          settings={settings}
-          handleSettings={handleSettings}
+          settings={attemptStats}
+          handleSettings={handleAttemptStats}
           toHome={setSettingsOff}
         />
+      ) : attemptPage.on ? (
+        <Attempt stats={attemptStats} toHome={setAttemptOff} />
       ) : (
         <Game
-          testType={settings.type}
-          testOperation={settings.operation}
-          maxValue={settings.max}
-          testCondition={settings.condition}
+          testType={attemptStats.type}
+          testOperation={attemptStats.operation}
+          maxValue={attemptStats.max}
+          testCondition={attemptStats.condition}
+          setStats={handleAttempt}
           toSettings={setSettingsOn}
+          toAttempt={setAttemptOn}
         />
       )}
     </React.Fragment>

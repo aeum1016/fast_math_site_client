@@ -15,7 +15,9 @@ const Game = ({
   maxValue,
   testType,
   testCondition,
+  setStats,
   toSettings,
+  toAttempt,
 }) => {
   const classes = useStyles();
 
@@ -76,6 +78,8 @@ const Game = ({
       })
     );
     clear();
+    setStats(attemptData);
+    toAttempt();
   };
 
   const handleChange = () => {
@@ -174,7 +178,9 @@ const Game = ({
       </Box>
       <span>
         <Typography variant="h2" className={classes.grey}>
-          {attemptData.completed}{" "}
+          {attemptData.type === "correct"
+            ? endCondition - attemptData.completed
+            : attemptData.completed}{" "}
           {attemptData.type === "time"
             ? endCondition - Math.floor(attemptData.time / 1000)
             : attemptData.time / 1000}
