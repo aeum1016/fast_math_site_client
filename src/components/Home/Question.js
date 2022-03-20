@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Typography, Card } from "@mui/material";
 
-import { useDispatch } from "react-redux";
-
 import Input from "./Input";
 import { getAnswer } from "./Game/Helper";
 import useStyles from "../../styles/game";

@@ -16,7 +16,7 @@ const Attempts = () => {
       color: "#FFFFFF",
     },
     "& .MuiDataGrid-row": {
-      "&:nth-child(2n)": { backgroundColor: "#616161" },
+      "&:nth-of-type(2n)": { backgroundColor: "#616161" },
     },
     "& .MuiDataGrid-columnHeaders": {
       fontSize: 16,

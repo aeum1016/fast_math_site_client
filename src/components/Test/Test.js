@@ -4,8 +4,6 @@ import { useDispatch } from "react-redux";
 
 import { createAttempt } from "../../actions/attempts";
 
-import useStyles from "../../styles/auth";
-
 const Form = () => {
   const [attemptData, setAttemptData] = useState({
     email: "",
@@ -15,6 +13,7 @@ const Form = () => {
     time: "",
     completed: "",
     incorrect: "",
+    username: "",
   });
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("profile"));
@@ -34,6 +33,7 @@ const Form = () => {
       time: "",
       completed: "",
       incorrect: "",
+      username: "",
     });
   };
 

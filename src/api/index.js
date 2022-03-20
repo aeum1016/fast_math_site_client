@@ -5,10 +5,10 @@ const API = axios.create({
 });
 
 const HEROKUAPI = axios.create({
-  baseURL: "https://aeum1016-memories-project.herokuapp.com",
+  baseURL: "https://do-some-math.herokuapp.com/",
 });
 
-let heroku = false;
+let heroku = true;
 const CURAPI = heroku ? HEROKUAPI : API;
 
 CURAPI.interceptors.request.use((req) => {

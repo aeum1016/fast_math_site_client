@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { CircularProgress, Box } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useSelector, useDispatch } from "react-redux";
@@ -16,7 +16,7 @@ const Leaderboard = () => {
       color: "#FFFFFF",
     },
     "& .MuiDataGrid-row": {
-      "&:nth-child(2n)": { backgroundColor: "#616161" },
+      "&:nth-of-type(2n)": { backgroundColor: "#616161" },
     },
     "& .MuiDataGrid-columnHeaders": {
       fontSize: 16,
@@ -40,6 +40,7 @@ const Leaderboard = () => {
     user
   ) {
     date = new Date(date).toLocaleString();
+
     return {
       type: type,
       operation: operation,
@@ -81,7 +82,7 @@ const Leaderboard = () => {
         attempt.completed,
         attempt.incorrect,
         attempt.createdAt,
-        attempt.email
+        attempt.username
       )
     )
   );

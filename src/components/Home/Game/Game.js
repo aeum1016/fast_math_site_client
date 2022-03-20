@@ -67,6 +67,7 @@ const Game = ({
     dispatch(
       createAttempt({
         ...attemptData,
+        username: user?.result?.username,
         email: user?.result?.email,
         time:
           attemptData.type === "time"
