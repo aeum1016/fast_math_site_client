@@ -8,7 +8,7 @@ const HEROKUAPI = axios.create({
   baseURL: "https://do-some-math.herokuapp.com/",
 });
 
-let heroku = false;
+let heroku = true;
 const CURAPI = heroku ? HEROKUAPI : API;
 
 CURAPI.interceptors.request.use((req) => {
