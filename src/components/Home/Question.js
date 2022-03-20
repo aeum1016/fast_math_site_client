@@ -26,7 +26,11 @@ const Question = ({
 
   const handleKeypress = (e) => {
     //it triggers by pressing the enter key
-    if ((e.keyCode >= 48 && e.keyCode <= 57) || e.keyCode === 189)
+    if (
+      (e.keyCode >= 48 && e.keyCode <= 57) ||
+      (e.keyCode >= 96 && e.keyCode <= 105) ||
+      e.keyCode === 189
+    )
       handleChange();
     if (e.keyCode === 13) {
       handleSubmit();
