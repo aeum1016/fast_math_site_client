@@ -15,6 +15,10 @@ import useStyles from "../../../styles/settings";
 const Settings = ({ settings, handleSettings, toHome }) => {
   const classes = useStyles();
 
+  document.onkeydown = (e) => {
+    if (e.code === "Enter" || e.code === "Space") toHome();
+  };
+
   return (
     <Paper
       style={{

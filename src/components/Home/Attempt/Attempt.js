@@ -15,6 +15,10 @@ const Attempt = ({ stats, toHome }) => {
   const rows = [];
 
   rows.reverse();
+
+  document.onkeydown = (e) => {
+    if (e.code === "Enter" || e.code === "Space") toHome();
+  };
   return (
     <Paper
       style={{
