@@ -67,8 +67,6 @@ const Leaderboard = () => {
 
   const attempts = useSelector((state) => state.attempts);
 
-  console.log(attempts);
-
   attempts.map((attempt) =>
     allAttempts.push(
       createData(
@@ -87,7 +85,7 @@ const Leaderboard = () => {
 
   const uniqueUsers = new Set();
   function containsUser(a) {
-    if (!uniqueUsers.has(a.user)) {
+    if (!uniqueUsers.has(a.user) && a.user != "Guest") {
       uniqueUsers.add(a.user);
       return false;
     }
