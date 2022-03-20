@@ -8,7 +8,7 @@ const HEROKUAPI = axios.create({
   baseURL: "https://do-some-math.herokuapp.com/",
 });
 
-let heroku = true;
+let heroku = false;
 const CURAPI = heroku ? HEROKUAPI : API;
 
 CURAPI.interceptors.request.use((req) => {
@@ -26,3 +26,4 @@ export const fetchUserAttempts = (email) => CURAPI.get(`/attempts/${email}`);
 
 export const signIn = (formData) => CURAPI.post("/user/signin", formData);
 export const signUp = (formData) => CURAPI.post("/user/signup", formData);
+export const getuser = (email) => CURAPI.get(`/user/${email}`);

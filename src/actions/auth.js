@@ -24,3 +24,15 @@ export const signup = (formData, navigate) => async (dispatch) => {
     console.log(error);
   }
 };
+
+export const getuser = (email, navigate) => async (dispatch) => {
+  try {
+    const { data } = await api.getuser(email);
+
+    dispatch({ type: AUTH, data });
+
+    navigate("/");
+  } catch (error) {
+    console.log(error);
+  }
+};

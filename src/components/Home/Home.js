@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Game from "./Game/Game";
 import Settings from "./Settings/Settings";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
   const [settingsPage, setSettingsPage] = useState({
     on: false,
   });
