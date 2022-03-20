@@ -5,7 +5,7 @@ export function getAnswer(one, two, operation) {
     case "+":
       return one + two;
     case "-":
-      return one - two;
+      return Math.max(one, two) - Math.min(one, two);
     case "*":
       return one * two;
     case "/":

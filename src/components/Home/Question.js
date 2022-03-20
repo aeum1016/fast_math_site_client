@@ -60,7 +60,12 @@ const Question = ({
     <Card className={qClass} elevation={0}>
       <div>
         <Typography className={qClass} variant="h6" align="center">
-          {Operation === "/" ? First * Second : First} {Operation} {Second}
+          {Operation === "/"
+            ? First * Second
+            : Operation === "-"
+            ? Math.max(First, Second)
+            : First}{" "}
+          {Operation} {Operation === "-" ? Math.min(First, Second) : Second}
         </Typography>
       </div>
       <div align="center">
