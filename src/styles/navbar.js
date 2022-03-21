@@ -12,7 +12,7 @@ export default makeStyles((theme) => ({
     padding: "10px 100px",
   },
   heading: {
-    color: grey[300],
+    color: "#a1b2c3",
     fontWeight: "bolder",
     textDecoration: "none",
   },
@@ -22,7 +22,7 @@ export default makeStyles((theme) => ({
   userName: {
     display: "flex",
     alignItems: "center",
-    color: grey[300],
+    color: "#a1b2c3",
     whiteSpace: "nowrap",
   },
   brandContainer: {
@@ -37,11 +37,11 @@ export default makeStyles((theme) => ({
     width: "500px",
   },
   auth: {
-    color: grey[300],
+    color: "#a1b2c3",
     backgroundColor: grey[800],
   },
   grey: {
-    color: grey[300],
+    color: "#a1b2c3",
     backgroundColor: grey[800],
   },
 }));

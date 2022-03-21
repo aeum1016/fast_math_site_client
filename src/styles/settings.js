@@ -4,10 +4,10 @@ import { grey } from "@mui/material/colors";
 export default makeStyles((theme) => ({
   button: {
     color: grey[800],
-    backgroundColor: grey[300],
+    backgroundColor: "#a1b2c3",
   },
   grey: {
     color: grey[800],
-    backgroundColor: grey[300],
+    backgroundColor: "#a1b2c3",
   },
 }));

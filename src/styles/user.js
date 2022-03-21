@@ -8,7 +8,7 @@ export default makeStyles((theme) => ({
     width: "400px",
   },
   auth: {
-    color: grey[300],
+    color: "#a1b2c3",
     backgroundColor: grey[800],
   },
   profile: {

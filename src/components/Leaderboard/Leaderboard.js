@@ -10,7 +10,7 @@ const Leaderboard = () => {
     borderRadius: 2,
     border: 0,
     "& .MuiDataGrid-main": { borderBottom: 0 },
-    color: "#e0e0e0",
+    color: "#a1b2c3",
     backgroundColor: "#424242",
     "& .MuiDataGrid-cell:hover": {
       color: "#FFFFFF",
@@ -149,7 +149,7 @@ const Leaderboard = () => {
         }}
       >
         <div style={{ width: "520px", margin: "25px" }}>
-          <Typography color="#e0e0e0" fontWeight="bold" variant="h4">
+          <Typography color="#a1b2c3" fontWeight="bold" variant="h4">
             Completions All 12 25
           </Typography>
           <DataGrid
@@ -166,7 +166,7 @@ const Leaderboard = () => {
           />
         </div>
         <div style={{ width: "520px", margin: "25px" }}>
-          <Typography color="#e0e0e0" fontWeight="bold" variant="h4">
+          <Typography color="#a1b2c3" fontWeight="bold" variant="h4">
             Completions All 20 25
           </Typography>
           <DataGrid
@@ -193,7 +193,7 @@ const Leaderboard = () => {
         }}
       >
         <div style={{ width: "520px", margin: "25px" }}>
-          <Typography color="#e0e0e0" fontWeight="bold" variant="h4">
+          <Typography color="#a1b2c3" fontWeight="bold" variant="h4">
             Completions Mult. 12 25
           </Typography>
           <DataGrid
@@ -210,7 +210,7 @@ const Leaderboard = () => {
           />
         </div>
         <div style={{ width: "520px", margin: "25px" }}>
-          <Typography color="#e0e0e0" fontWeight="bold" variant="h4">
+          <Typography color="#a1b2c3" fontWeight="bold" variant="h4">
             Completions Div. 12 25
           </Typography>
           <DataGrid

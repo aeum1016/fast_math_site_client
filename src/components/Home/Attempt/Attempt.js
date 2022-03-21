@@ -18,7 +18,7 @@ const Attempt = ({ stats, toHome }) => {
   const style = {
     borderRadius: 12,
     border: 0,
-    color: "#e0e0e0",
+    color: "#a1b2c3",
     backgroundColor: "#616161",
     elevation: 0,
   };

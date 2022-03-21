@@ -8,7 +8,7 @@ export default makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
     padding: "16px",
-    color: grey[300],
+    color: "#a1b2c3",
     backgroundColor: grey[800],
   },
   root: {
@@ -26,17 +26,17 @@ export default makeStyles((theme) => ({
   },
   submit: {
     margin: "24px 0 16px",
-    color: grey[300],
+    color: "#a1b2c3",
     backgroundColor: grey[700],
   },
   googleButton: {
     marginBottom: "16px",
-    color: grey[300],
+    color: "#a1b2c3",
     backgroundColor: grey[700],
   },
   grey: {
-    input: grey[300],
-    color: grey[300],
+    input: "#a1b2c3",
+    color: "#a1b2c3",
     backgroundColor: grey[800],
   },
 }));

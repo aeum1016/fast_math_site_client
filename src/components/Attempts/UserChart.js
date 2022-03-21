@@ -55,7 +55,7 @@ const UserChart = () => {
         isAnimationActive={false}
         type="monotone"
         dataKey="speed"
-        stroke="#e0e0e0"
+        stroke="#a1b2c3"
       />
     </LineChart>
   );

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { CircularProgress, Box } from "@mui/material";
+import { CircularProgress, Box, Typography, Card } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -18,7 +18,7 @@ const Attempts = () => {
     borderRadius: 2,
     border: 0,
     "& .MuiDataGrid-main": { borderBottom: 0 },
-    color: "#e0e0e0",
+    color: "#a1b2c3",
     backgroundColor: "#424242",
     "& .MuiDataGrid-cell:hover": {
       color: "#FFFFFF",
@@ -61,6 +61,13 @@ const Attempts = () => {
   }
   function getSpeed(params) {
     return `${params.row.completed / (params.row.time / 60)}`;
+  }
+  function getAverage(rows) {
+    var sum = 0;
+    for (var i = 0; i < rows.length; i++) {
+      sum += (rows[i].completed * 60) / rows[i].time;
+    }
+    return Math.round((sum * 1000) / rows.length) / 1000;
   }
   const columns = [
     { field: "type", headerName: "Type", width: 100 },
@@ -105,6 +112,30 @@ const Attempts = () => {
         marginRight: "auto",
       }}
     >
+      <Card
+        sx={{
+          ...style,
+        }}
+      >
+        <Card sx={{ ...style, display: "inline-flex" }}>
+          <Typography
+            variant="h4"
+            margin="40px"
+            fontWeight="bold"
+            width="400px"
+          >
+            {"Avg (Total):"} {getAverage(rows)}
+          </Typography>
+          <Typography
+            variant="h4"
+            margin="40px"
+            fontWeight="bold"
+            width="400px"
+          >
+            {"Avg (Last 10):"} {getAverage(rows.slice(0, 10))}
+          </Typography>
+        </Card>
+      </Card>
       <DataGrid
         sx={{ ...style }}
         rows={rows}
