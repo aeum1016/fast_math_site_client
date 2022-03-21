@@ -8,6 +8,7 @@ import {
   MenuItem,
   Paper,
   Box,
+  Typography,
 } from "@mui/material";
 import CalculateOutlinedIcon from "@mui/icons-material/CalculateOutlined";
 import useStyles from "../../../styles/settings";
@@ -43,6 +44,17 @@ const Settings = ({ settings, handleSettings, toHome }) => {
           <CalculateOutlinedIcon className={classes.grey} />
         </IconButton>
       </Box>
+      <Box
+        style={{
+          width: "180px",
+          marginLeft: "auto",
+          marginRight: "auto",
+        }}
+      >
+        <Typography variant="h6" fontSize="10pt" color="#bdbdbd">
+          Press Space or Enter to return
+        </Typography>
+      </Box>
       <FormControl
         style={{
           width: "150px",
@@ -57,7 +69,7 @@ const Settings = ({ settings, handleSettings, toHome }) => {
           label="Type"
           onChange={handleSettings}
         >
-          <MenuItem value={"correct"}>Correct</MenuItem>
+          <MenuItem value={"correct"}>Completions</MenuItem>
           <MenuItem value={"time"}>Time</MenuItem>
         </Select>
       </FormControl>

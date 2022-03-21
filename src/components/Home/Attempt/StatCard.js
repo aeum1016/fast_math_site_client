@@ -21,10 +21,10 @@ const StatCard = ({ title, value, units }) => {
       }}
       elevation={0}
     >
-      <Typography variant="h6" fontSize={32} fontWeight="bold">
+      <Typography variant="h6" fontSize={32}>
         {title} -
       </Typography>
-      <Typography variant="h6" fontSize={22} color="#bdbdbd">
+      <Typography variant="h6" fontSize={22}>
         {value}
       </Typography>
       <Typography variant="h6" fontSize={12} color="#bdbdbd">

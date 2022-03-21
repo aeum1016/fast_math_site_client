@@ -6,6 +6,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { getUserAttempts } from "../../actions/attempts";
 
 const Attempts = () => {
+  const user = JSON.parse(localStorage.getItem("profile"));
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUserAttempts(user?.result?.email));
+  }, []);
+
   const style = {
     borderRadius: 2,
     border: 0,
@@ -41,7 +49,7 @@ const Attempts = () => {
   ) {
     date = new Date(date).toLocaleString();
     return {
-      type: type,
+      type: type === "correct" ? "completions" : type,
       operation: operation,
       max: max,
       time: time / 1000,
@@ -85,14 +93,6 @@ const Attempts = () => {
   );
 
   rows.reverse();
-
-  const user = JSON.parse(localStorage.getItem("profile"));
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getUserAttempts(user?.result?.email));
-  }, []);
 
   return !userAttempts.length ? (
     <CircularProgress />

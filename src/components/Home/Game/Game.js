@@ -79,7 +79,9 @@ const Game = ({
     );
     clear();
     setStats(attemptData);
-    toAttempt();
+    setTimeout(() => {
+      toAttempt();
+    }, 50);
   };
 
   const handleChange = () => {

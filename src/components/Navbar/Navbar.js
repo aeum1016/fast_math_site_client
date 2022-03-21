@@ -70,7 +70,11 @@ const Navbar = () => {
             <Typography className={classes.userName} variant="body1">
               {user.result.name}
             </Typography>
-          ) : null}
+          ) : (
+            <Typography className={classes.userName} variant="body1">
+              Sign In
+            </Typography>
+          )}
         </IconButton>
       </div>
       <div>

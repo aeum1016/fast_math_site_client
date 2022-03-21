@@ -1,9 +1,20 @@
-import React from "react";
-import { Paper } from "@mui/material";
+import React, { useEffect } from "react";
+import { Paper, Typography, Box } from "@mui/material";
+
+import { useSelector, useDispatch } from "react-redux";
 
 import StatCard from "./StatCard";
+import { getUserAttempts } from "../../../actions/attempts";
 
 const Attempt = ({ stats, toHome }) => {
+  const user = JSON.parse(localStorage.getItem("profile"));
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUserAttempts(user?.result?.email));
+  }, []);
+
   const style = {
     borderRadius: 12,
     border: 0,
@@ -14,7 +25,23 @@ const Attempt = ({ stats, toHome }) => {
 
   const rows = [];
 
-  rows.reverse();
+  const userAttempts = useSelector((state) => state.user);
+  var highScore = false;
+
+  if (userAttempts.length) {
+    userAttempts.map((userAttempt) => {
+      if (
+        userAttempt.type === stats.type &&
+        userAttempt.operation === stats.operation &&
+        userAttempt.max === stats.max
+      ) {
+        rows.push((userAttempt.completed * 1000 * 60) / userAttempt.time);
+      }
+    });
+
+    rows.sort((a, b) => b - a);
+    if ((stats.completed * 1000 * 60) / stats.time >= rows[0]) highScore = true;
+  }
 
   document.onkeydown = (e) => {
     if (e.code === "Enter" || e.code === "Space") toHome();
@@ -30,6 +57,40 @@ const Attempt = ({ stats, toHome }) => {
       }}
       onClick={toHome}
     >
+      {user ? null : (
+        <Box
+          style={{
+            width: "280px",
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
+        >
+          <Typography
+            style={{ marginLeft: "20px", marginBottom: "10px" }}
+            variant="h6"
+            fontWeight="bold"
+            display="inline"
+          >
+            (Sign in to save your scores)
+          </Typography>
+        </Box>
+      )}
+      <Typography
+        style={{ marginLeft: "20px", marginBottom: "10px" }}
+        variant="h4"
+        fontWeight="bold"
+        display="inline"
+      >
+        Summary
+      </Typography>
+      <Typography
+        style={{ marginLeft: "25px", marginBottom: "10px" }}
+        variant="h4"
+        fontWeight="bold"
+        display="inline"
+      >
+        {highScore ? "*New Record*" : null}
+      </Typography>
       <div style={{ ...style, display: "inline-flex" }}>
         <StatCard title="Game Type" value={stats.type} units="" />
         <StatCard title="Operation" value={stats.operation} units="" />
@@ -46,6 +107,17 @@ const Attempt = ({ stats, toHome }) => {
         <StatCard title="Completed" value={stats.completed} units="Questions" />
         <StatCard title="Time" value={stats.time / 1000} units="seconds" />
       </div>
+      <Box
+        style={{
+          width: "180px",
+          marginLeft: "auto",
+          marginRight: "auto",
+        }}
+      >
+        <Typography variant="h6" fontSize="10pt" color="#bdbdbd">
+          Press Space or Enter to return
+        </Typography>
+      </Box>
     </Paper>
   );
 };

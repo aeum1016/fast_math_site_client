@@ -150,7 +150,7 @@ const Leaderboard = () => {
       >
         <div style={{ width: "520px", margin: "25px" }}>
           <Typography color="#e0e0e0" fontWeight="bold" variant="h4">
-            Correct All 12 25
+            Completions All 12 25
           </Typography>
           <DataGrid
             sx={{ ...style }}
@@ -167,7 +167,7 @@ const Leaderboard = () => {
         </div>
         <div style={{ width: "520px", margin: "25px" }}>
           <Typography color="#e0e0e0" fontWeight="bold" variant="h4">
-            Correct All 20 25
+            Completions All 20 25
           </Typography>
           <DataGrid
             sx={{ ...style }}
@@ -194,7 +194,7 @@ const Leaderboard = () => {
       >
         <div style={{ width: "520px", margin: "25px" }}>
           <Typography color="#e0e0e0" fontWeight="bold" variant="h4">
-            Correct Mult. 12 25
+            Completions Mult. 12 25
           </Typography>
           <DataGrid
             sx={{ ...style }}
@@ -211,7 +211,7 @@ const Leaderboard = () => {
         </div>
         <div style={{ width: "520px", margin: "25px" }}>
           <Typography color="#e0e0e0" fontWeight="bold" variant="h4">
-            Correct Div. 12 25
+            Completions Div. 12 25
           </Typography>
           <DataGrid
             sx={{ ...style }}
