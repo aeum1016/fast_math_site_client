@@ -85,7 +85,7 @@ const Leaderboard = () => {
 
   const uniqueUsers = new Set();
   function containsUser(a) {
-    if (!uniqueUsers.has(a.user) && a.user != "Guest") {
+    if (!uniqueUsers.has(a.user) && a.user !== "Guest") {
       uniqueUsers.add(a.user);
       return false;
     }
