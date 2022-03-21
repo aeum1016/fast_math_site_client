@@ -15,12 +15,17 @@ const UserChart = () => {
   const [rows, setRows] = useState({
     data: [],
   });
-
-  const userAttempts = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
+  const user = JSON.parse(localStorage.getItem("profile"));
   useEffect(() => {
-    const newRows = [];
+    dispatch(getUserAttempts(user?.result?.email));
+  }, []);
+
+  const userAttempts = useSelector((state) => state.user);
+
+  const newRows = [];
+  useEffect(() => {
     userAttempts.map((userAttempt) => {
       newRows.push({
         speed: (userAttempt.completed / userAttempt.time) * 60 * 1000,
@@ -28,12 +33,8 @@ const UserChart = () => {
         id: userAttempt.email + userAttempt.createdAt,
       });
     });
-
     setRows({ data: newRows });
-
-    const user = JSON.parse(localStorage.getItem("profile"));
-    dispatch(getUserAttempts(user?.result?.email));
-  }, []);
+  }, [userAttempts]);
 
   return (
     <LineChart

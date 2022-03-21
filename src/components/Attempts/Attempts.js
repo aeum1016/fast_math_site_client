@@ -92,7 +92,7 @@ const Attempts = () => {
 
   useEffect(() => {
     dispatch(getUserAttempts(user?.result?.email));
-  }, [user]);
+  }, []);
 
   return !userAttempts.length ? (
     <CircularProgress />
