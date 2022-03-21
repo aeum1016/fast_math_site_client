@@ -75,22 +75,16 @@ const Attempt = ({ stats, toHome }) => {
           </Typography>
         </Box>
       )}
-      <Typography
-        style={{ marginLeft: "20px", marginBottom: "10px" }}
-        variant="h4"
-        fontWeight="bold"
-        display="inline"
-      >
-        Summary
-      </Typography>
-      <Typography
-        style={{ marginLeft: "25px", marginBottom: "10px" }}
-        variant="h4"
-        fontWeight="bold"
-        display="inline"
-      >
-        {highScore ? "*New Record*" : null}
-      </Typography>
+      {highScore ? (
+        <Typography
+          style={{ marginLeft: "20px", marginBottom: "10px" }}
+          variant="h4"
+          fontWeight="bold"
+          display="inline"
+        >
+          *New Record*
+        </Typography>
+      ) : null}
       <div style={{ ...style, display: "inline-flex" }}>
         <StatCard title="Game Type" value={stats.type} units="" />
         <StatCard title="Operation" value={stats.operation} units="" />

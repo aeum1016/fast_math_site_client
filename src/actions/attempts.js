@@ -28,5 +28,6 @@ export const getUserAttempts = (email) => async (dispatch) => {
     dispatch({ type: GET_USER, payload: data });
   } catch (error) {
     console.log(error);
+    dispatch({ type: GET_USER, payload: [] });
   }
 };
