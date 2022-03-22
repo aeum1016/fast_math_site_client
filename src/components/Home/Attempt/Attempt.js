@@ -61,7 +61,7 @@ const Attempt = ({ stats, toHome }) => {
         <Box
           style={{
             ...style,
-            width: "280px",
+            width: "auto",
             marginLeft: "auto",
             marginRight: "auto",
           }}

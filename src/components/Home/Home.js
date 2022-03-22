@@ -47,7 +47,7 @@ const Home = () => {
   const handleAttemptStats = (e) => {
     setAttemptStats({
       ...attemptStats,
-      [e.target.name]: e.target.value <= 0 ? 1 : e.target.value,
+      [e.target.name]: e.target.value <= 10 ? 10 : e.target.value,
     });
   };
 

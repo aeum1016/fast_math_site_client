@@ -100,9 +100,11 @@ const Game = ({
       ...questions,
       currentQuestion: questions.currentQuestion + 1,
     });
-    questions.questionFirst.push(getRandomInt(attemptData.max));
-    questions.questionSecond.push(getRandomInt(attemptData.max));
-    questions.questionOperation.push(getOperation(attemptData.operation));
+    if (endCondition - questions.currentQuestion >= 5) {
+      questions.questionFirst.push(getRandomInt(attemptData.max));
+      questions.questionSecond.push(getRandomInt(attemptData.max));
+      questions.questionOperation.push(getOperation(attemptData.operation));
+    }
     setAttemptData({
       ...attemptData,
       completed: attemptData.completed + 1,
