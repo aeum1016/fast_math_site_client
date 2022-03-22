@@ -9,6 +9,7 @@ import {
   Paper,
   Box,
   Typography,
+  OutlinedInput,
 } from "@mui/material";
 import CalculateOutlinedIcon from "@mui/icons-material/CalculateOutlined";
 import useStyles from "../../../styles/settings";
@@ -63,7 +64,6 @@ const Settings = ({ settings, handleSettings, toHome }) => {
       >
         <InputLabel id="inputType">Type</InputLabel>
         <Select
-          labelId="inputType"
           name="type"
           value={settings.type}
           label="Type"
@@ -79,9 +79,28 @@ const Settings = ({ settings, handleSettings, toHome }) => {
           margin: "20px",
         }}
       >
+        <InputLabel id="inputType">End Condition</InputLabel>
+        <Select
+          name="condition"
+          value={settings.condition}
+          label="End Condition"
+          onChange={handleSettings}
+        >
+          <MenuItem value={10}>10</MenuItem>
+          <MenuItem value={20}>20</MenuItem>
+          <MenuItem value={25}>25</MenuItem>
+          <MenuItem value={50}>50</MenuItem>
+          <MenuItem value={100}>100</MenuItem>
+        </Select>
+      </FormControl>
+      <FormControl
+        style={{
+          width: "150px",
+          margin: "20px",
+        }}
+      >
         <InputLabel id="inputOperation">Operation</InputLabel>
         <Select
-          labelId="inputOperation"
           name="operation"
           value={settings.operation}
           label="Operation"
@@ -101,40 +120,14 @@ const Settings = ({ settings, handleSettings, toHome }) => {
         }}
       >
         <InputLabel id="inputMaxValue">Max Value</InputLabel>
-        <Select
-          labelId="inputMaxValue"
+        <OutlinedInput
           name="max"
-          value={settings.max}
+          placeholder="Max Value"
+          type="number"
           label="Max Value"
+          defaultValue={settings.max}
           onChange={handleSettings}
-        >
-          <MenuItem value={10}>10</MenuItem>
-          <MenuItem value={12}>12</MenuItem>
-          <MenuItem value={15}>15</MenuItem>
-          <MenuItem value={20}>20</MenuItem>
-          <MenuItem value={30}>30</MenuItem>
-        </Select>
-      </FormControl>
-      <FormControl
-        style={{
-          width: "150px",
-          margin: "20px",
-        }}
-      >
-        <InputLabel id="inputCondition">End Condition</InputLabel>
-        <Select
-          labelId="inputCondition"
-          name="condition"
-          value={settings.condition}
-          label="End Condition"
-          onChange={handleSettings}
-        >
-          <MenuItem value={10}>10</MenuItem>
-          <MenuItem value={20}>20</MenuItem>
-          <MenuItem value={25}>25</MenuItem>
-          <MenuItem value={50}>50</MenuItem>
-          <MenuItem value={100}>100</MenuItem>
-        </Select>
+        />
       </FormControl>
     </Paper>
   );

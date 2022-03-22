@@ -41,7 +41,7 @@ const Question = ({
     if (
       String(
         getAnswer(Operation === "/" ? First * Second : First, Second, Operation)
-      ) === questionData.answer
+      ) === questionData.answer.trim()
     ) {
       handleCorrect();
       clear();

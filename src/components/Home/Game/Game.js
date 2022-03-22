@@ -33,7 +33,7 @@ const Game = ({
   const [attemptData, setAttemptData] = useState({
     email: "",
     operation: operation,
-    max: max,
+    max: parseInt(max),
     type: endType,
     time: 0,
     completed: 0,

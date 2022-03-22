@@ -6,7 +6,6 @@ const theme = createTheme({
     primary: grey,
     secondary: blueGrey,
     grey: grey[600],
-    white: { 500: "#000000" },
   },
 });
 

@@ -60,6 +60,7 @@ const Attempt = ({ stats, toHome }) => {
       {user ? null : (
         <Box
           style={{
+            ...style,
             width: "280px",
             marginLeft: "auto",
             marginRight: "auto",
