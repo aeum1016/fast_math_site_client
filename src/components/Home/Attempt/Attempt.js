@@ -33,7 +33,10 @@ const Attempt = ({ stats, toHome }) => {
       if (
         userAttempt.type === stats.type &&
         userAttempt.operation === stats.operation &&
-        userAttempt.max === stats.max
+        userAttempt.max === stats.max &&
+        (stats.type === "time"
+          ? true
+          : userAttempt.completed === stats.completed)
       ) {
         rows.push((userAttempt.completed * 1000 * 60) / userAttempt.time);
       }

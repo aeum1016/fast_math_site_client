@@ -100,7 +100,10 @@ const Game = ({
       ...questions,
       currentQuestion: questions.currentQuestion + 1,
     });
-    if (endCondition - questions.currentQuestion >= 5) {
+    if (
+      endCondition - questions.currentQuestion >= 5 ||
+      attemptData.type === "time"
+    ) {
       questions.questionFirst.push(getRandomInt(attemptData.max));
       questions.questionSecond.push(getRandomInt(attemptData.max));
       questions.questionOperation.push(getOperation(attemptData.operation));
