@@ -32,4 +32,9 @@ export default makeStyles((theme) => ({
     color: "#a1b2c3",
     backgroundColor: grey[800],
   },
+  red: {
+    input: "#D5896F",
+    color: "#D5896F",
+    backgroundColor: grey[800],
+  },
 }));

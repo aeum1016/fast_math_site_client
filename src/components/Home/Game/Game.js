@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Typography, Grid, IconButton, Box } from "@mui/material";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import Question from "../Question";
 import { getRandomInt, getOperation } from "./Helper";
@@ -20,6 +20,10 @@ const Game = ({
   toAttempt,
 }) => {
   const classes = useStyles();
+
+  const user = JSON.parse(localStorage.getItem("profile"));
+
+  const dispatch = useDispatch();
 
   const max = maxValue;
   const operation = testOperation;
@@ -39,6 +43,13 @@ const Game = ({
     completed: 0,
     incorrect: 0,
   });
+
+  const [curAttemptData, setCurAttemptData] = useState({
+    pace: 0,
+    highScore: 0,
+  });
+
+  const rows = [];
 
   const [questions, setQuestions] = useState({
     currentQuestion: 0,
@@ -61,9 +72,6 @@ const Game = ({
       getOperation(attemptData.operation),
     ],
   });
-
-  const dispatch = useDispatch();
-  const user = JSON.parse(localStorage.getItem("profile"));
 
   const handleSubmit = async () => {
     dispatch(
@@ -111,6 +119,10 @@ const Game = ({
     setAttemptData({
       ...attemptData,
       completed: attemptData.completed + 1,
+    });
+    setCurAttemptData({
+      ...curAttemptData,
+      pace: ((attemptData.completed + 1) * 1000 * 60) / attemptData.time,
     });
   };
 
@@ -165,6 +177,30 @@ const Game = ({
     }
   }, [attemptData]);
 
+  const userAttempts = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (userAttempts.length) {
+      userAttempts.map((userAttempt) => {
+        if (
+          userAttempt.type === attemptData.type &&
+          userAttempt.operation === attemptData.operation &&
+          userAttempt.max === attemptData.max &&
+          (attemptData.type === "time"
+            ? true
+            : userAttempt.completed === endCondition)
+        ) {
+          rows.push((userAttempt.completed * 1000 * 60) / userAttempt.time);
+        }
+      });
+      rows.sort((a, b) => b - a);
+      setCurAttemptData({
+        ...curAttemptData,
+        highScore: rows[0],
+      });
+    }
+  }, [userAttempts]);
+
   return (
     <>
       <Box
@@ -184,13 +220,27 @@ const Game = ({
         </IconButton>
       </Box>
       <span>
-        <Typography variant="h2" className={classes.grey}>
+        <Typography variant="h4" className={classes.grey}>
+          Questions:{" "}
           {attemptData.type === "correct"
             ? endCondition - attemptData.completed
-            : attemptData.completed}{" "}
+            : attemptData.completed}
+        </Typography>
+        <Typography variant="h4" className={classes.grey}>
+          Time:{" "}
           {attemptData.type === "time"
             ? endCondition - Math.floor(attemptData.time / 1000)
             : attemptData.time / 1000}
+        </Typography>
+        <Typography
+          variant="h4"
+          className={
+            curAttemptData.pace < curAttemptData.highScore
+              ? classes.grey
+              : classes.red
+          }
+        >
+          QPM: {curAttemptData.pace.toFixed(2)}
         </Typography>
         <Grid container className={classes.grid} columns={20}>
           <Grid item xs={2} sm={2}>

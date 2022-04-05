@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+import { useDispatch } from "react-redux";
 
 import Game from "./Game/Game";
 import Settings from "./Settings/Settings";
 import Attempt from "./Attempt/Attempt";
+
+import { getUserAttempts } from "../../actions/attempts";
 
 const Home = () => {
   const [settingsPage, setSettingsPage] = useState({
@@ -59,6 +63,13 @@ const Home = () => {
       incorrect: e.incorrect,
     });
   };
+  const user = JSON.parse(localStorage.getItem("profile"));
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUserAttempts(user?.result?.email));
+  }, []);
 
   return (
     <React.Fragment>
