@@ -105,17 +105,9 @@ const Attempt = ({ stats, toHome }) => {
         <StatCard title="Completed" value={stats.completed} units="Questions" />
         <StatCard title="Time" value={stats.time / 1000} units="seconds" />
       </div>
-      <Box
-        style={{
-          width: "180px",
-          marginLeft: "auto",
-          marginRight: "auto",
-        }}
-      >
-        <Typography variant="h6" fontSize="10pt" color="#bdbdbd">
-          Press Space or Enter to return
-        </Typography>
-      </Box>
+      <Typography variant="h6" fontSize="10pt" color="#bdbdbd" align="center">
+        Press Space or Enter to return
+      </Typography>
     </Paper>
   );
 };

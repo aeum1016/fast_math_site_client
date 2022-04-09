@@ -203,13 +203,7 @@ const Game = ({
 
   return (
     <>
-      <Box
-        style={{
-          width: "40px",
-          marginLeft: "auto",
-          marginRight: "auto",
-        }}
-      >
+      <div align="center">
         <IconButton
           aria-label="settings"
           onClick={toSettings}
@@ -218,7 +212,7 @@ const Game = ({
         >
           <SettingsOutlinedIcon className={classes.grey} />
         </IconButton>
-      </Box>
+      </div>
       <span>
         <Typography variant="h4" className={classes.grey}>
           Questions:{" "}

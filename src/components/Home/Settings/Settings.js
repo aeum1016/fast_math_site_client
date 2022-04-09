@@ -45,17 +45,9 @@ const Settings = ({ settings, handleSettings, toHome }) => {
           <CalculateOutlinedIcon className={classes.grey} />
         </IconButton>
       </Box>
-      <Box
-        style={{
-          width: "180px",
-          marginLeft: "auto",
-          marginRight: "auto",
-        }}
-      >
-        <Typography variant="h6" fontSize="10pt" color="#bdbdbd">
-          Press Space or Enter to return
-        </Typography>
-      </Box>
+      <Typography variant="h6" fontSize="10pt" color="#bdbdbd" align="center">
+        Press Space or Enter to return
+      </Typography>
       <FormControl
         style={{
           width: "150px",

@@ -3,7 +3,6 @@ import { grey } from "@mui/material/colors";
 
 export default makeStyles((theme) => ({
   grid: {
-    height: "240px",
     justifyContent: "center",
     alignItems: "center",
   },
