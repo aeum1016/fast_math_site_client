@@ -79,7 +79,8 @@ const Leaderboard = () => {
         attempt.completed,
         attempt.incorrect,
         attempt.createdAt,
-        attempt.email
+        attempt.email,
+        attempt.username
       )
     )
   );
@@ -87,6 +88,7 @@ const Leaderboard = () => {
 
   const uniqueUsers = new Set();
   function containsUser(a) {
+    console.log(a.user);
     if (!uniqueUsers.has(a.email) && a.user !== "Guest") {
       uniqueUsers.add(a.email);
       return false;
