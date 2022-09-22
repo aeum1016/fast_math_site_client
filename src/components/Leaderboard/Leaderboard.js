@@ -37,6 +37,7 @@ const Leaderboard = () => {
     completed,
     incorrect,
     date,
+    email,
     user
   ) {
     const shortDate = new Date(date).toLocaleDateString();
@@ -48,6 +49,7 @@ const Leaderboard = () => {
       completed: completed,
       incorrect: incorrect,
       date: shortDate,
+      email: email,
       user: user,
       id: user + date,
     };
@@ -77,7 +79,7 @@ const Leaderboard = () => {
         attempt.completed,
         attempt.incorrect,
         attempt.createdAt,
-        attempt.username
+        attempt.email
       )
     )
   );
@@ -85,8 +87,8 @@ const Leaderboard = () => {
 
   const uniqueUsers = new Set();
   function containsUser(a) {
-    if (!uniqueUsers.has(a.user) && a.user !== "Guest") {
-      uniqueUsers.add(a.user);
+    if (!uniqueUsers.has(a.email) && a.user !== "Guest") {
+      uniqueUsers.add(a.email);
       return false;
     }
     return true;
