@@ -84,11 +84,12 @@ const Leaderboard = () => {
       )
     )
   );
-  allAttempts.sort((a, b) => b.completed / b.time - a.completed / a.time);
+
+  allAttempts.sort((a, b) => a.time - b.time);
 
   const uniqueUsers = new Set();
+
   function containsUser(a) {
-    console.log(a.user);
     if (!uniqueUsers.has(a.email) && a.user !== "Guest") {
       uniqueUsers.add(a.email);
       return false;

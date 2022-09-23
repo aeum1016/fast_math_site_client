@@ -83,13 +83,16 @@ const Game = ({
           attemptData.type === "time"
             ? Math.floor(attemptData.time)
             : attemptData.time,
+        completed: questions.currentQuestion,
+        incorrect: 0,
       })
     );
-    clear();
-    setStats(attemptData);
-    setTimeout(() => {
-      toAttempt();
-    }, 50);
+    setStats({
+      time: attemptData.time,
+      completed: questions.currentQuestion,
+      incorrect: 0,
+    });
+    toAttempt();
   };
 
   const handleChange = () => {
@@ -103,27 +106,33 @@ const Game = ({
     }
   };
 
-  const handleNextQuestion = (e) => {
-    setQuestions({
-      ...questions,
-      currentQuestion: questions.currentQuestion + 1,
-    });
+  const handleNextQuestion = () => {
     if (
       endCondition - questions.currentQuestion >= 5 ||
       attemptData.type === "time"
     ) {
-      questions.questionFirst.push(getRandomInt(attemptData.max));
-      questions.questionSecond.push(getRandomInt(attemptData.max));
-      questions.questionOperation.push(getOperation(attemptData.operation));
+      setQuestions({
+        ...questions,
+        currentQuestion: questions.currentQuestion + 1,
+        questionFirst: [
+          ...questions.questionFirst,
+          getRandomInt(attemptData.max),
+        ],
+        questionSecond: [
+          ...questions.questionSecond,
+          getRandomInt(attemptData.max),
+        ],
+        questionOperation: [
+          ...questions.questionOperation,
+          getOperation(attemptData.operation),
+        ],
+      });
+    } else {
+      setQuestions({
+        ...questions,
+        currentQuestion: questions.currentQuestion + 1,
+      });
     }
-    setAttemptData({
-      ...attemptData,
-      completed: attemptData.completed + 1,
-    });
-    setCurAttemptData({
-      ...curAttemptData,
-      pace: ((attemptData.completed + 1) * 1000 * 60) / attemptData.time,
-    });
   };
 
   const handleIncorrect = () => {
@@ -133,7 +142,7 @@ const Game = ({
     });
   };
 
-  const clear = () => {
+  useEffect(() => {
     setAttemptData({
       ...attemptData,
       email: "",
@@ -145,7 +154,7 @@ const Game = ({
       startTime: 0,
       curTime: 0,
     });
-  };
+  }, [setStats]);
 
   useEffect(() => {
     const updateTime = setInterval(() => {
@@ -158,6 +167,10 @@ const Game = ({
           ...attemptData,
           time: timeData.curTime - timeData.startTime,
         });
+        setCurAttemptData({
+          ...curAttemptData,
+          pace: (questions.currentQuestion * 1000 * 60) / attemptData.time,
+        });
       }
     }, 10);
     return () => {
@@ -167,7 +180,7 @@ const Game = ({
 
   useEffect(() => {
     if (attemptData.type === "correct") {
-      if (attemptData.completed === endCondition) {
+      if (questions.currentQuestion === endCondition) {
         handleSubmit();
       }
     } else if (attemptData.type === "time") {
@@ -175,7 +188,7 @@ const Game = ({
         handleSubmit();
       }
     }
-  }, [attemptData]);
+  }, [handleNextQuestion]);
 
   const userAttempts = useSelector((state) => state.user);
 
@@ -217,8 +230,8 @@ const Game = ({
         <Typography variant="h4" className={classes.grey}>
           Questions:{" "}
           {attemptData.type === "correct"
-            ? endCondition - attemptData.completed
-            : attemptData.completed}
+            ? endCondition - questions.currentQuestion
+            : questions.currentQuestion}
         </Typography>
         <Typography variant="h4" className={classes.grey}>
           Time:{" "}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Typography, Card } from "@mui/material";
 
 import Input from "./Input";
@@ -30,24 +30,31 @@ const Question = ({
       (e.keyCode >= 48 && e.keyCode <= 57) ||
       (e.keyCode >= 96 && e.keyCode <= 105) ||
       e.keyCode === 189
-    )
+    ) {
       handleChange();
-    if (e.keyCode === 13) {
-      handleSubmit();
     }
   };
 
+  useEffect(() => {
+    handleSubmit();
+  }, [questionData]);
+
   const handleSubmit = (e) => {
-    if (
-      String(
-        getAnswer(Operation === "/" ? First * Second : First, Second, Operation)
-      ) === questionData.answer.trim()
-    ) {
-      handleCorrect();
-      clear();
-    } else {
-      handleIncorrect();
-    }
+    if (questionData.answer != "")
+      if (
+        String(
+          getAnswer(
+            Operation === "/" ? First * Second : First,
+            Second,
+            Operation
+          )
+        ) === questionData.answer.trim()
+      ) {
+        handleCorrect();
+        clear();
+      } else {
+        handleIncorrect();
+      }
   };
 
   const clear = () => {
